@@ -1,6 +1,7 @@
 # nmapAutomator
 
-A script you can run in the background!
+A script you can run in the background, based on the original project from [21y4d](https://github.com/21y4d/nmapAutomator). So thanks to 21y4d and all the other contributors without whom this would not have been possible.
+Compared to the original one this script does some additional checks and provides a docker image.
   
 ![nmapAutomator](https://i.imgur.com/3cMJIPr.gif)
   
