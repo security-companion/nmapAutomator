@@ -18,3 +18,34 @@ jobs:
         uses: ludeeus/action-shellcheck@master
         env:
           SHELLCHECK_OPTS: -e SC2059 -e SC2086 -e SC1083 -e SC2016
+      - name: Analyze code against standards
+        run: |
+          IFS=$'\n'
+          for file in ${GITHUB_WORKSPACE} ; do
+            if [[ "$file" == *.sh ]]; then
+              echo "Analyzing $file..."
+
+              # Check for Camel Casing in variables/functions
+              if grep -P -n '[a-z][A-Z]' "$file"; then
+                 echo "::warning file=$file,title=Camel Casing Violation::Possible Camel Casing violation found.  Please use Camel Casing (e.g., newVariable) for variables and functions."
+              fi
+
+              # Check for underscore in output filenames.  This is a basic check; might need refinement
+              if grep -P -n '.*[^"]_[^"]*\${HOST}.*' "$file"; then
+                 echo "::warning file=$file,title=Output Filename Format::Output filenames should use underscores instead of spaces and include \${HOST}."
+              fi
+              # Check for variable enclosure
+              if grep -P -n '\$[a-zA-Z_][a-zA-Z0-9_]*[^\{]' "$file"; then
+                 echo "::warning file=$file,title=Variable Enclosure::Variables should be enclosed in \${} (e.g., \${myVar})."
+              fi
+
+              # Check for variable quoting (excluding shell-splitting)
+              if grep -P -n '=[^"]*\$[a-zA-Z_][a-zA-Z0-9_]*[^"]*' "$file"; then
+                 echo "::warning file=$file,title=Variable Quoting::Always quote variables (e.g., \"\${my_var}\"), unless you're doing shell-splitting."
+              fi
+
+              echo "Analysis of $file complete."
+            fi
+          done
+          unset IFS
+          
