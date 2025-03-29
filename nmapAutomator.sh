@@ -138,6 +138,7 @@ header() {
                         printf "${YELLOW} with IP ${NC}${urlIP}\n\n"
                 else
                         printf ".. ${RED}Could not resolve IP of ${NC}${HOST}\n\n"
+                        printf "${urlIP}"
                 fi
         else
                 printf "\n"
