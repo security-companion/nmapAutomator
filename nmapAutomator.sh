@@ -279,7 +279,7 @@ nmapProgressBar() {
 
         # Print final output, remove extra nmap noise
         if [ -e "${outputFile}" ]; then
-                sed -n '/PORT.*STATE.*SERVICE/,/^# Nmap/H;${x;s/^\n\|\n[^\n]*\n# Nmap.*//gp}' "${outputFile}" | awk '!/^SF(:|-).*$/' | grep -v 'service unrecognized despite'
+                sed -n "/PORT.*STATE.*SERVICE/,/^# Nmap/H;${x;s/^\n\|\n[^\n]*\n# Nmap.*//gp}" "${outputFile}" | awk '!/^SF(:|-).*$/' | grep -v "service unrecognized despite"
         else
                 cat "${tmpOutputFile}"
         fi
@@ -837,8 +837,12 @@ fi
 
 # Ensure selected scan type is among available choices, then run the selected scan
 if ! case "${TYPE}" in [Nn]etwork | [Pp]ort | [Ss]cript | [Ff]ull | UDP | udp | [Vv]ulns | [Rr]econ | [Aa]ll) false ;; esac then
-        mkdir -p "${OUTPUTDIR}" && cd "${OUTPUTDIR}" && mkdir -p nmap/ || usage
-        main | tee "nmapAutomator_${HOST}_${TYPE}.txt"
+        if mkdir -p "${OUTPUTDIR}" && cd "${OUTPUTDIR}" && mkdir -p nmap/
+        then
+          main | tee "nmapAutomator_${HOST}_${TYPE}.txt"
+        else
+          usage
+        fi
 else
         printf "${RED}\n"
         printf "${RED}Invalid Type!\n"
