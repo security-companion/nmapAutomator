@@ -111,6 +111,15 @@ Scan Types:
 
 ------
 
+## Usage with docker
+DNS resolution currently does not work within docker, so please make a separate nslookup and directly enter the IP.
+Eg. 45.33.34.156 for scanme.nmap.org
+```
+docker build -t na .
+docker run -t na -H 45.33.32.156 -t All
+```
+------
+
 ## Upcoming Features
 - [x] Support URL/DNS - Thanks @KatsuragiCSL
 - [x] Add extensions fuzzing for http recon
