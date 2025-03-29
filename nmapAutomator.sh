@@ -93,7 +93,7 @@ elif [ -n "${NMAPPATH}" ]; then
         if [ ! -x $NMAPPATH ]; then
                 printf "${RED}\nFile is not executable! Attempting chmod +x...${NC}\n"
                 chmod +x $NMAPPATH 2>/dev/null || (printf "${RED}Could not chmod. Running in Remote mode...${NC}\n\n" && REMOTE=true)
-        elif [ $($NMAPPATH -h | head -c4) != "Nmap" ]; then
+        elif [ "$($NMAPPATH -h | head -c4)" != "Nmap" ]; then
                 printf "${RED}\nStatic binary does not appear to be Nmap! Running in Remote mode...${NC}\n\n" && REMOTE=true
         fi
         printf "${GREEN}\nUsing static nmap binary at ${NMAPPATH}${NC}\n"
