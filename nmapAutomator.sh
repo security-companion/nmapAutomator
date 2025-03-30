@@ -326,6 +326,7 @@ portScan() {
         printf "${NC}\n"
 
         if ! $REMOTE; then
+                printf "HOST is ${HOST}"
                 nmapProgressBar "${nmapType} -T4 --max-retries 1 --max-scan-delay 20 --open -oN nmap/Port_${HOST}.nmap ${HOST} ${DNSSTRING}"
                 assignPorts "${HOST}"
         else
