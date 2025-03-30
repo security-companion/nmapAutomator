@@ -539,42 +539,41 @@ recon() {
 
         # Ask user for which recon tools to run, default to All if no answer is detected in 30s
         if [ -n "${availableRecon}" ]; then
-                while [ "${reconCommand}" != "!" ]; do
-                        printf "${YELLOW}\n"
-                        printf "Which commands would you like to run?${NC}\nAll (Default), ${availableRecon}, Skip <!>\n\n"
+                if $RUNALLRECON; then
+                        print "running all recon, skip wait"
+                        runRecon "${HOST}" "All"
+                else
+                        while [ "${reconCommand}" != "!" ]; do
+                                printf "${YELLOW}\n"
+                                printf "Which commands would you like to run?${NC}\nAll (Default), ${availableRecon}, Skip <!>\n\n"
 
-                        if $ALLRECON; then
-                                print "running all recon, skip wait"
-                                runRecon "${HOST}" "All"
-                                reconCommand="!"
-                                count=$((secs + 1))
-                        fi
-                        while [ ${count} -lt ${secs} ]; do
-                                tlimit=$((secs - count))
-                                printf "\033[2K\rRunning Default in (${tlimit})s: "
+                                while [ ${count} -lt ${secs} ]; do
+                                        tlimit=$((secs - count))
+                                        printf "\033[2K\rRunning Default in (${tlimit})s: "
 
-                                # Waits 1 second for user's input - POSIX read -t
-                                reconCommand="$(sh -c '{ { sleep 1; kill -sINT $$; } & }; exec head -n 1')"
-                                count=$((count + 1))
-                                [ -n "${reconCommand}" ] && break
+                                        # Waits 1 second for user's input - POSIX read -t
+                                        reconCommand="$(sh -c '{ { sleep 1; kill -sINT $$; } & }; exec head -n 1')"
+                                        count=$((count + 1))
+                                        [ -n "${reconCommand}" ] && break
+                                done
+                                if expr "${reconCommand}" : '^\([Aa]ll\)$' >/dev/null || [ -z "${reconCommand}" ]; then
+                                        runRecon "${HOST}" "All"
+                                        reconCommand="!"
+                                elif expr " ${availableRecon}," : ".* ${reconCommand}," >/dev/null; then
+                                        runRecon "${HOST}" "${reconCommand}"
+                                        reconCommand="!"
+                                elif [ "${reconCommand}" = "Skip" ] || [ "${reconCommand}" = "!" ]; then
+                                        reconCommand="!"
+                                        echo
+                                        echo
+                                        echo
+                                else
+                                        printf "${NC}\n"
+                                        printf "${RED}Incorrect choice!\n"
+                                        printf "${NC}\n"
+                                fi
                         done
-                        if expr "${reconCommand}" : '^\([Aa]ll\)$' >/dev/null || [ -z "${reconCommand}" ]; then
-                                runRecon "${HOST}" "All"
-                                reconCommand="!"
-                        elif expr " ${availableRecon}," : ".* ${reconCommand}," >/dev/null; then
-                                runRecon "${HOST}" "${reconCommand}"
-                                reconCommand="!"
-                        elif [ "${reconCommand}" = "Skip" ] || [ "${reconCommand}" = "!" ]; then
-                                reconCommand="!"
-                                echo
-                                echo
-                                echo
-                        else
-                                printf "${NC}\n"
-                                printf "${RED}Incorrect choice!\n"
-                                printf "${NC}\n"
-                        fi
-                done
+                fi
         else
                 printf "${YELLOW}No Recon Recommendations found...\n"
                 printf "${NC}\n\n\n"
