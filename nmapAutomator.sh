@@ -538,6 +538,12 @@ recon() {
                 while [ "${reconCommand}" != "!" ]; do
                         printf "${YELLOW}\n"
                         printf "Which commands would you like to run?${NC}\nAll (Default), ${availableRecon}, Skip <!>\n\n"
+
+                        # check if in docker container, then select All
+                        if grep -q docker /proc/1/cgroup; then 
+                                runRecon "${HOST}" "All"
+                                reconCommand="!"
+                        fi
                         while [ ${count} -lt ${secs} ]; do
                                 tlimit=$((secs - count))
                                 printf "\033[2K\rRunning Default in (${tlimit})s: "
