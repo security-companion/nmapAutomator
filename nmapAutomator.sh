@@ -46,6 +46,10 @@ while [ $# -gt 0 ]; do
                 REMOTE=true
                 shift
                 ;;
+        -a | --allrecon)
+                ALLRECON=true
+                shift
+                ;;
         *)
                 POSITIONAL="${POSITIONAL} $1"
                 shift
@@ -106,7 +110,7 @@ fi
 usage() {
         echo
         printf "${RED}Usage: $(basename $0) -H/--host ${NC}<TARGET-IP>${RED} -t/--type ${NC}<TYPE>${RED}\n"
-        printf "${YELLOW}Optional: [-r/--remote ${NC}<REMOTE MODE>${YELLOW}] [-d/--dns ${NC}<DNS SERVER>${YELLOW}] [-o/--output ${NC}<OUTPUT DIRECTORY>${YELLOW}] [-s/--static-nmap ${NC}<STATIC NMAP PATH>${YELLOW}]\n\n"
+        printf "${YELLOW}Optional: [-a/--allrecon] [-r/--remote ${NC}<REMOTE MODE>${YELLOW}] [-d/--dns ${NC}<DNS SERVER>${YELLOW}] [-o/--output ${NC}<OUTPUT DIRECTORY>${YELLOW}] [-s/--static-nmap ${NC}<STATIC NMAP PATH>${YELLOW}]\n\n"
         printf "Scan Types:\n"
         printf "${YELLOW}\tNetwork : ${NC}Shows all live hosts in the host's network ${YELLOW}(~15 seconds)\n"
         printf "${YELLOW}\tPort    : ${NC}Shows all open ports ${YELLOW}(~15 seconds)\n"
@@ -539,11 +543,11 @@ recon() {
                         printf "${YELLOW}\n"
                         printf "Which commands would you like to run?${NC}\nAll (Default), ${availableRecon}, Skip <!>\n\n"
 
-                        # check if in docker container, then select All
-                        if grep -q "docker" "/proc/1/cgroup"; then
-                                print "running inside of docker"
+                        if $ALLRECON; then
+                                print "running all recon, skip wait"
                                 runRecon "${HOST}" "All"
                                 reconCommand="!"
+                                count=$((secs + 1))
                         fi
                         while [ ${count} -lt ${secs} ]; do
                                 tlimit=$((secs - count))
