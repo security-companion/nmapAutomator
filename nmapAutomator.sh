@@ -47,7 +47,7 @@ while [ $# -gt 0 ]; do
                 shift
                 ;;
         -a | --allrecon)
-                ALLRECON=true
+                RUNALLRECON=true
                 shift
                 ;;
         *)
