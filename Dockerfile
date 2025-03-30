@@ -1,8 +1,12 @@
 FROM ubuntu:latest
 
-#VOLUME ["/root"]
+# Create a directory for application data
+RUN mkdir /scanner
 
-WORKDIR /root
+# Declare a volume to persist application data
+VOLUME ["/scanner"]
+
+WORKDIR /scanner
 
 RUN apt update -y && apt-get upgrade -y
 RUN apt-get install -y \
@@ -19,9 +23,9 @@ RUN apt-get install -y \
     iputils-ping && \
     nmap --script-updatedb
 
-RUN rm -rf /root/nmapAutomator/*
+RUN rm -rf /scanner/nmapAutomator/*
 RUN git clone https://github.com/security-companion/nmapAutomator.git && \
-    ln -s /root/nmapAutomator/nmapAutomator.sh /usr/local/bin/
+    ln -s /scanner/nmapAutomator/nmapAutomator.sh /usr/local/bin/
 
 # Clean
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -30,4 +34,4 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 #RUN  useradd admin && echo "admin:admin" | chpasswd && adduser admin sudo
 #USER admin
 
-ENTRYPOINT [ "/bin/bash", "/root/nmapAutomator/nmapAutomator.sh" ]
+ENTRYPOINT [ "/bin/bash", "/scanner/nmapAutomator/nmapAutomator.sh" ]
