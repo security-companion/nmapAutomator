@@ -543,9 +543,10 @@ recon() {
                         print "running all recon, skip wait"
                         runRecon "${HOST}" "All"
                 else
+                        print "no runallrecon option set"
                         while [ "${reconCommand}" != "!" ]; do
                                 printf "${YELLOW}\n"
-                                printf "Which commands would you like to run?${NC}\nAll (Default), ${availableRecon}, Skip <!>\n\n"
+                                printf "Which commands would you like to run now?${NC}\nAll (Default), ${availableRecon}, Skip <!>\n\n"
 
                                 while [ ${count} -lt ${secs} ]; do
                                         tlimit=$((secs - count))
