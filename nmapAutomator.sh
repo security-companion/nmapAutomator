@@ -138,8 +138,6 @@ header() {
                         printf "${YELLOW} with IP ${NC}${urlIP}\n\n"
                 else
                         printf ".. ${RED}Could not resolve IP of ${NC}${HOST}\n\n"
-                        printf "$(host -4 -W 1 ${HOST} ${DNSSERVER}\n\n"
-                        printf "$(host -4 -W 1 ${HOST} ${DNSSERVER} 2>/dev/null | grep ${HOST} | head -n 1 | awk {'print $NF'})\n\n"
                 fi
         else
                 printf "\n"
