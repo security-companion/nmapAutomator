@@ -540,7 +540,7 @@ recon() {
                         printf "Which commands would you like to run?${NC}\nAll (Default), ${availableRecon}, Skip <!>\n\n"
 
                         # check if in docker container, then select All
-                        if grep -q docker /proc/1/cgroup; then 
+                        if grep -i docker /proc/1/cgroup; then 
                                 runRecon "${HOST}" "All"
                                 reconCommand="!"
                         fi
