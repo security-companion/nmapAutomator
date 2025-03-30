@@ -118,6 +118,11 @@ Eg. 45.33.34.156 for scanme.nmap.org
 docker build -t na .
 docker run -t na -H 45.33.32.156 -t All
 ```
+
+If you want to just start the container and interact with it run
+```
+docker container run -it na
+```
 ------
 
 ## Upcoming Features
