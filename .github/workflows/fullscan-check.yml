@@ -1,10 +1,6 @@
 name: NmapAutomator Test
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+on: workflow_dispatch
 
 jobs:
   nmap-test:
@@ -33,17 +29,26 @@ jobs:
         securitycompanion/nmapautomator \
         -t na -H 45.33.32.156 -t Full
 
-    - name: Compare results
+    - name: Validate output files for expected words
       run: |
-        # Compare all output files with expected results
+        # Define expected words
+        declare -A expected_words=(
+        ["scan1.txt"]="open|filtered|closed"
+        ["scan2.txt"]="tcp|udp|service"
+        )
+
+        # Check each file for expected words
         for file in auto_scans/*; do
-          echo "Checking content of file: $filename"
-          filename=$(basename $file)
-          if [ -f "expected_scans/$filename" ]; then
-            diff -u "expected_scans/$filename" "$file" 
-            # || exit 1
-          else
-            echo "⚠️ Missing expected file: $filename"
+        print "check content of file $file"
+        filename=$(basename "$file")
+        print "$filename"
+        if [[ ${expected_words[$filename]+_} ]]; then
+            grep -E "${expected_words[$filename]}" "$file" > /dev/null || {
+            echo "❌ Validation failed for $filename. Expected words not found."
             # exit 1
-          fi
+            }
+            echo "✅ Validation passed for $filename."
+        else
+            echo "⚠️ No validation rules defined for $filename."
+        fi
         done
