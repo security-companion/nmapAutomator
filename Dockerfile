@@ -15,6 +15,7 @@ RUN apt-get install -y \
     iputils-ping && \
     nmap --script-updatedb
 
+RUN rm -rf /root/nmapAutomator/*
 RUN git clone https://github.com/security-companion/nmapAutomator.git && \
     ln -s /root/nmapAutomator/nmapAutomator.sh /usr/local/bin/
 
@@ -22,4 +23,3 @@ RUN git clone https://github.com/security-companion/nmapAutomator.git && \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT [ "/bin/bash", "/root/nmapAutomator/nmapAutomator.sh" ]
-#ENTRYPOINT [ "/bin/bash"]
