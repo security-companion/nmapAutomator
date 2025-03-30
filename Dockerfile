@@ -11,13 +11,15 @@ RUN apt-get install -y \
     ffuf \
     ldap-utils \
     snmp \
+    bind9-host \
     iputils-ping && \
     nmap --script-updatedb
 
-RUN git clone https://github.com/21y4d/nmapAutomator.git && \
+RUN git clone https://github.com/security-companion/nmapAutomator.git && \
     ln -s /root/nmapAutomator/nmapAutomator.sh /usr/local/bin/
 
 # Clean
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT [ "/bin/bash", "/root/nmapAutomator/nmapAutomator.sh" ]
+#ENTRYPOINT [ "/bin/bash"]
