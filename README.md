@@ -114,13 +114,16 @@ Scan Types:
 ## Usage with docker
 DNS resolution currently does not work within docker, so please make a separate nslookup and directly enter the IP.
 Eg. 45.33.34.156 for scanme.nmap.org
+First build the container, then run scan and lastly copy results from container onto your host machine (replace CONTAINERNAME with the correct one found with docker ps)
 ```
 docker build -t na .
-docker run -t na -H 45.33.32.156 -t All
+docker run -t na -a -H 45.33.32.156 -t All
+docker cp CONTAINERNAME:scanner scanner
 ```
 
-If you want to just start the container and interact with it run
+If you want to just start the container and interact with it remove the second part from the ENTRYPOINT in Dockerfile and run
 ```
+docker build -t na .
 docker container run -it na
 ```
 ------

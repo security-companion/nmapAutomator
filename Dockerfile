@@ -1,7 +1,7 @@
 FROM ubuntu:latest
 
 # Create a directory for application data
-RUN mkdir /scanner
+RUN mkdir -p /scanner
 
 # Declare a volume to persist application data
 VOLUME ["/scanner"]

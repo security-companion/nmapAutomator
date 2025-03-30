@@ -540,7 +540,7 @@ recon() {
         # Ask user for which recon tools to run, default to All if no answer is detected in 30s
         if [ -n "${availableRecon}" ]; then
                 if $RUNALLRECON; then
-                        print "running all recon, skip wait"
+                        echo "running all recon, skip wait"
                         runRecon "${HOST}" "All"
                 else
                         print "no runallrecon option set"
