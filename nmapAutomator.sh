@@ -580,6 +580,8 @@ reconRecommend() {
         IFS="
 "
 
+        mkdir -p recon/
+
         # Set $ports and $file variables
         if [ -f "nmap/Full_Extra_${HOST}.nmap" ]; then
                 ports="${allPorts}"
@@ -731,8 +733,6 @@ runRecon() {
 
         IFS="
 "
-
-        mkdir -p recon/
 
         if [ "$2" = "All" ]; then
                 reconCommands="$(grep "${HOST}" "nmap/Recon_${HOST}.nmap")"
