@@ -264,6 +264,9 @@ nmapProgressBar() {
         refreshRate="${2:-1}"
         outputFile="$(echo $1 | sed -e 's/.*-oN \(.*\).nmap.*/\1/').nmap"
         tmpOutputFile="${outputFile}.tmp"
+        printf "Running command ${1}"
+        #printf "${outputFile}"
+        #printf "${tmpOutputFile}"
 
         # Run the nmap command
         if [ ! -e "${outputFile}" ]; then
@@ -271,7 +274,7 @@ nmapProgressBar() {
         fi
 
         # Keep checking nmap stats and calling progressBar() every $refreshRate
-        while { [ ! -e "${outputFile}" ] || ! grep -q "Nmap done at" "${outputFile}"; } && { [ ! -e "${tmpOutputFile}" ] || ! grep -i -q "quitting" "${tmpOutputFile}"; }; do
+        while { [ ! -e "${outputFile}" ] || ! grep -q "Nmap done" "${outputFile}"; } && { [ ! -e "${tmpOutputFile}" ] || ! grep -i -q "quitting" "${tmpOutputFile}"; }; do
                 scanType="$(tail -n 2 "${tmpOutputFile}" 2>/dev/null | sed -ne '/elapsed/{s/.*undergoing \(.*\) Scan.*/\1/p}')"
                 percent="$(tail -n 2 "${tmpOutputFile}" 2>/dev/null | sed -ne '/% done/{s/.*About \(.*\)\..*% done.*/\1/p}')"
                 elapsed="$(tail -n 2 "${tmpOutputFile}" 2>/dev/null | sed -ne '/elapsed/{s/Stats: \(.*\) elapsed.*/\1/p}')"
