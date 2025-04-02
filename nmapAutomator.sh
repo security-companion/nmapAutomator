@@ -744,6 +744,15 @@ reconRecommend() {
                 echo
         fi
 
+        # SSH recon
+        if echo "${file}" | grep -q "22/tcp"; then
+                printf "${NC}\n"
+                printf "${YELLOW}SSH Recon:\n"
+                printf "${NC}\n"
+                echo "ssh-audit \"${HOST}\" | tee \"recon/ssh-audit_${HOST}.txt\""
+                echo
+        fi
+
         IFS="${origIFS}"
 
         echo
