@@ -16,6 +16,8 @@ RUN apt-get install -y \
     nmap \
     nikto \
     nuclei \
+    sslyze \
+    gowitness  \
     ssh-audit \
     ffuf \
     ldap-utils \

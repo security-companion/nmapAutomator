@@ -58,6 +58,18 @@ The entire script output is also saved, which you can view with `less -r outputD
 -----
   
 ## Requirements:
+[gowitness ](https://github.com/sensepost/gowitness), which we can install with:
+```bash
+sudo apt update
+sudo apt install gowitness  -y
+```
+
+[sslyze](https://github.com/nabla-c0d3/sslyze), which we can install with:
+```bash
+sudo apt update
+sudo apt install sslyze -y
+```
+
 [nuclei](https://github.com/projectdiscovery/nuclei), which we can install with:
 ```bash
 sudo apt update

@@ -651,6 +651,9 @@ reconRecommend() {
                                 if echo "${line}" | grep -q ssl/http; then
                                         urlType='https://'
                                         echo "sslscan \"${HOST}\" | tee \"recon/sslscan_${HOST}_${port}.txt\""
+                                        if type sslyze >/dev/null 2>&1; then
+                                                echo "sslyze \"${HOST}\" | tee \"recon/sslyze_${HOST}_${port}.txt\""
+                                        fi
                                         echo "nikto -host \"${urlType}${HOST}:${port}\" -ssl | tee \"recon/nikto_${HOST}_${port}.txt\""
                                 else
                                         urlType='http://'
@@ -658,6 +661,9 @@ reconRecommend() {
                                 fi
                                 if type nuclei >/dev/null 2>&1; then
                                         echo "nuclei -target \"${urlType}${HOST}:${port}\" | tee \"recon/nuclei_${HOST}_${port}.txt\""
+                                fi
+                                if type gowitness >/dev/null 2>&1; then
+                                        echo "gowitness scan single -u \"${urlType}${HOST}:${port}\" | tee \"recon/gowitness_${HOST}_${port}.txt\""
                                 fi
                                 if type ffuf >/dev/null 2>&1; then
                                         extensions="$(echo 'index' >./index && ffuf -s -w ./index:FUZZ -mc '200,302' -e '.asp,.aspx,.html,.jsp,.php' -u "${urlType}${HOST}:${port}/FUZZ" 2>/dev/null | awk -vORS=, -F 'index' '{print $2}' | sed 's/.$//' && rm ./index)"
