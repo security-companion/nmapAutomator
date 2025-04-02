@@ -15,6 +15,10 @@ This will ensure two things:
 
 Once initial ports are found '*in 5-10 seconds*', we can start manually looking into those ports, and let the rest run in the background with no interaction from our side whatsoever.  
 
+## Disclaimer
+
+Only scan targets for which you have permission to scan. No liability is taken for any damages by using this tool.
+
 ## Features
 
 ### Scans
@@ -58,6 +62,12 @@ The entire script output is also saved, which you can view with `less -r outputD
 ```bash
 sudo apt update
 sudo apt install nuclei -y
+```
+
+[ssh-audit](https://github.com/jtesta/ssh-audit), which we can install with:
+```bash
+sudo apt update
+sudo apt install ssh-audit -y
 ```
 
 [ffuf](https://github.com/ffuf/ffuf), which we can install with:
