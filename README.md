@@ -54,6 +54,12 @@ The entire script output is also saved, which you can view with `less -r outputD
 -----
   
 ## Requirements:
+[nuclei](https://github.com/projectdiscovery/nuclei), which we can install with:
+```bash
+sudo apt update
+sudo apt install nuclei -y
+```
+
 [ffuf](https://github.com/ffuf/ffuf), which we can install with:
 ```bash
 sudo apt update
@@ -112,12 +118,12 @@ Scan Types:
 ------
 
 ## Usage with docker
-DNS resolution currently does not work within docker, so please make a separate nslookup and directly enter the IP.
-Eg. 45.33.34.156 for scanme.nmap.org
 First build the container, then run scan and lastly copy results from container onto your host machine (replace CONTAINERNAME with the correct one found with docker ps)
+Make sure to delete old containers, images and builds before building a new one
 ```
-docker build -t na .
+docker build --no-cache -t na .
 docker run -t na -a -H 45.33.32.156 -t All
+docker ps
 docker cp CONTAINERNAME:scanner scanner
 ```
 
