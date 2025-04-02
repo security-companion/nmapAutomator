@@ -15,6 +15,7 @@ RUN apt-get install -y \
     curl \
     nmap \
     nikto \
+    nuclei \
     ffuf \
     ldap-utils \
     snmp \
