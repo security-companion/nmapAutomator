@@ -97,7 +97,7 @@ elif [ -n "${NMAPPATH}" ]; then
         if [ ! -x $NMAPPATH ]; then
                 printf "${RED}\nFile is not executable! Attempting chmod +x...${NC}\n"
                 chmod +x $NMAPPATH 2>/dev/null || (printf "${RED}Could not chmod. Running in Remote mode...${NC}\n\n" && REMOTE=true)
-        elif [ $($NMAPPATH -h | head -c4) != "Nmap" ]; then
+        elif [ "$($NMAPPATH -h | head -c4)" != "Nmap" ]; then
                 printf "${RED}\nStatic binary does not appear to be Nmap! Running in Remote mode...${NC}\n\n" && REMOTE=true
         fi
         printf "${GREEN}\nUsing static nmap binary at ${NMAPPATH}${NC}\n"
@@ -861,8 +861,12 @@ fi
 
 # Ensure selected scan type is among available choices, then run the selected scan
 if ! case "${TYPE}" in [Nn]etwork | [Pp]ort | [Ss]cript | [Ff]ull | UDP | udp | [Vv]ulns | [Rr]econ | [Aa]ll) false ;; esac then
-        mkdir -p "${OUTPUTDIR}" && cd "${OUTPUTDIR}" && mkdir -p nmap/ || usage
-        main | tee "nmapAutomator_${HOST}_${TYPE}.txt"
+        if mkdir -p "${OUTPUTDIR}" && cd "${OUTPUTDIR}" && mkdir -p nmap/
+        then
+          main | tee "nmapAutomator_${HOST}_${TYPE}.txt"
+        else
+          usage
+        fi
 else
         printf "${RED}\n"
         printf "${RED}Invalid Type!\n"
