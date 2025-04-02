@@ -1,0 +1,41 @@
+name: Prettier Check
+
+on:
+  pull_request: # Run on pull requests
+  push:         # Run on pushes to the repository
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Specify the Node.js version
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Run Prettier check
+      - name: Run Prettier check
+        run: npm run check-format
+
+      # Optional Step 5: Annotate Pull Request with results (if formatting issues are found)
+      - name: Annotate Pull Request with Results
+        if: failure()
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '⚠️ Prettier found formatting issues. Please run `npm run format` to fix them.'
+            })
