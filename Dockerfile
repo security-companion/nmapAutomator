@@ -17,7 +17,7 @@ RUN apt-get install -y \
     nikto \
     nuclei \
     sslyze \
-    gowitness  \
+    gowitness \
     ssh-audit \
     ffuf \
     ldap-utils \
