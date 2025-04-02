@@ -12,6 +12,8 @@ origIFS="${IFS}"
 elapsedStart="$(date '+%H:%M:%S' | awk -F: '{print $1 * 3600 + $2 * 60 + $3}')"
 REMOTE=false
 
+RUNALLRECON=false
+
 # Parse flags
 while [ $# -gt 0 ]; do
         key="$1"
@@ -555,7 +557,7 @@ recon() {
                         echo "running all recon, skip wait"
                         runRecon "${HOST}" "All"
                 else
-                        print "no runallrecon option set"
+                        echo "no runallrecon option set"
                         while [ "${reconCommand}" != "!" ]; do
                                 printf "${YELLOW}\n"
                                 printf "Which commands would you like to run now?${NC}\nAll (Default), ${availableRecon}, Skip <!>\n\n"
