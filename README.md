@@ -1,4 +1,4 @@
-# nmapAutomator
+# nmapAutomatorNG
 
 A script you can run in the background, based on the original project from [21y4d](https://github.com/21y4d/nmapAutomator). So thanks to 21y4d and all the other contributors without whom this would not have been possible.
 Compared to the original one this script does some additional checks and provides a docker image.
@@ -34,16 +34,16 @@ Only scan targets for which you have permission to scan. No liability is taken f
 *Note: This is a reconnaissance tool, and it does not perform any exploitation.*
 
 ### Automatic Recon
-With the `recon` option, nmapAutomator will automatically recommend and run the best recon tools for each found port.  
-If a recommended tool is missing from your machine, nmapAutomator will suggest how to install it.
+With the `recon` option, nmapAutomatorNG will automatically recommend and run the best recon tools for each found port.  
+If a recommended tool is missing from your machine, nmapAutomatorNG will suggest how to install it.
 
 ### Runs on any shell
-nmapAutomator is 100% POSIX compatible, so it can run on any `sh` shell, and on any unix-based machine (*even a 10 YO router!*), which makes nmapAutomator ideal for lateral movement recon.
+nmapAutomatorNG is 100% POSIX compatible, so it can run on any `sh` shell, and on any unix-based machine (*even a 10 YO router!*), which makes nmapAutomatorNG ideal for lateral movement recon.
 
-If you want to run nmapAutomator on a remote machine, simply download a static nmap binary from [this link](https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x86_64/nmap), or with [static-get](https://github.com/minos-org/minos-static), and transfer it to the remote machine. You can then use `-s/--static-nmap` to specify the path to the static nmap binary.
+If you want to run nmapAutomatorNG on a remote machine, simply download a static nmap binary from [this link](https://github.com/andrew-d/static-binaries/raw/master/binaries/linux/x86_64/nmap), or with [static-get](https://github.com/minos-org/minos-static), and transfer it to the remote machine. You can then use `-s/--static-nmap` to specify the path to the static nmap binary.
 
 ### Remote Mode (Beta)
-With the `-r/--remote` flag nmapAutomator will run in Remote Mode, which is designed to run using POSIX shell commands only, without relying on any external tools.  
+With the `-r/--remote` flag nmapAutomatorNG will run in Remote Mode, which is designed to run using POSIX shell commands only, without relying on any external tools.  
 Remote Mode is still under development. Only following scans currently work with `-r`:
 - [x] Network Scan (currently ping only)
 - [ ] Port Scan
@@ -52,8 +52,8 @@ Remote Mode is still under development. Only following scans currently work with
 - [ ] Recon Scan
 
 ### Output
-nmapAutomator saves the output of each type of scan is saved into a separate file, under the output directory.  
-The entire script output is also saved, which you can view with `less -r outputDir/nmapAutomator_host_type.txt`, or you can simply `cat` it.
+nmapAutomatorNG saves the output of each type of scan is saved into a separate file, under the output directory.  
+The entire script output is also saved, which you can view with `less -r outputDir/nmapAutomatorNG_host_type.txt`, or you can simply `cat` it.
 
 -----
   
@@ -106,16 +106,16 @@ Most of these should be installed by default in [Parrot OS](https://www.parrotse
   
 ## Installation:
 ```bash
-git clone https://github.com/21y4d/nmapAutomator.git
-sudo ln -s $(pwd)/nmapAutomator/nmapAutomator.sh /usr/local/bin/
+git clone https://github.com/21y4d/nmapAutomatorNG.git
+sudo ln -s $(pwd)/nmapAutomatorNG/nmapAutomatorNG.sh /usr/local/bin/
 ```
 
 -----
 
 ## Usage:
 ```
-./nmapAutomator.sh -h
-Usage: nmapAutomator.sh -H/--host <TARGET-IP> -t/--type <TYPE>
+./nmapAutomatorNG.sh -h
+Usage: nmapAutomatorNG.sh -H/--host <TARGET-IP> -t/--type <TYPE>
 Optional: [-r/--remote <REMOTE MODE>] [-d/--dns <DNS SERVER>] [-o/--output <OUTPUT DIRECTORY>] [-s/--static-nmap <STATIC NMAP PATH>]
 
 Scan Types:
@@ -131,10 +131,10 @@ Scan Types:
 
 **Example scans**:
 ```
-./nmapAutomator.sh --host 10.1.1.1 --type All
-./nmapAutomator.sh -H 10.1.1.1 -t Basic
-./nmapAutomator.sh -H academy.htb -t Recon -d 1.1.1.1
-./nmapAutomator.sh -H 10.10.10.10 -t network -s ./nmap
+./nmapAutomatorNG.sh --host 10.1.1.1 --type All
+./nmapAutomatorNG.sh -H 10.1.1.1 -t Basic
+./nmapAutomatorNG.sh -H academy.htb -t Recon -d 1.1.1.1
+./nmapAutomatorNG.sh -H 10.10.10.10 -t network -s ./nmap
 ```
 
 ------
@@ -165,7 +165,7 @@ docker container run -it na
 - [x] Save full script output to a file
 - [x] Improve performance and efficiency of the script - Thanks @caribpa
 - [x] Make nmapAutomater 100% POSIX compatible. - Massive Thanks to @caribpa
-- [x] Add network scanning type, so nmapAutomator can discover live hosts on the network.
+- [x] Add network scanning type, so nmapAutomatorNG can discover live hosts on the network.
 - [ ] Enable usage of multiple scan types in one scan.
 - [ ] Enable scanning of multiple hosts in one scan.
 - [ ] Fully implement Remote Mode on all scans
