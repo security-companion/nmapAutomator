@@ -883,7 +883,7 @@ fi
 if ! case "${TYPE}" in [Nn]etwork | [Pp]ort | [Ss]cript | [Ff]ull | UDP | udp | [Vv]ulns | [Rr]econ | [Aa]ll) false ;; esac then
         if mkdir -p "${OUTPUTDIR}" && cd "${OUTPUTDIR}" && mkdir -p nmap/
         then
-          main | tee "nmapAutomator_${HOST}_${TYPE}.txt"
+          main | tee "nmapAutomatorNG_${HOST}_${TYPE}.txt"
         else
           usage
         fi

@@ -1,4 +1,4 @@
-name: NmapAutomator Test
+name: nmapAutomatorNG Test
 
 on: workflow_dispatch
 
@@ -19,11 +19,11 @@ jobs:
     - name: Create output directory
       run: mkdir -p auto_scans
 
-    - name: Run nmapAutomator scan
+    - name: Run nmapAutomatorNG scan
       run: |
         docker run --rm \
-        -v $(pwd)/auto_scans:/nmapAutomator/auto_scans \
-        securitycompanion/nmapautomator \
+        -v $(pwd)/auto_scans:/nmapAutomatorNG/auto_scans \
+        securitycompanion/nmapAutomatorNG \
         -t na -H 45.33.32.156 -t Basic
 
     - name: Validate output files for expected words

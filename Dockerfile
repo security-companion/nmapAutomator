@@ -27,9 +27,9 @@ RUN apt-get install -y \
     iputils-ping && \
     nmap --script-updatedb
 
-RUN rm -rf /scanner/nmapAutomator/*
-RUN git clone https://github.com/security-companion/nmapAutomator.git && \
-    ln -s /scanner/nmapAutomator/nmapAutomator.sh /usr/local/bin/
+RUN rm -rf /scanner/nmapAutomatorNG/*
+RUN git clone https://github.com/security-companion/nmapAutomatorNG.git && \
+    ln -s /scanner/nmapAutomatorNG/nmapAutomatorNG.sh /usr/local/bin/
 
 # Clean
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -38,4 +38,4 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 #RUN  useradd admin && echo "admin:admin" | chpasswd && adduser admin sudo
 #USER admin
 
-ENTRYPOINT [ "/bin/bash", "/scanner/nmapAutomator/nmapAutomator.sh" ]
+ENTRYPOINT [ "/bin/bash", "/scanner/nmapAutomatorNG/nmapAutomatorNG.sh" ]
