@@ -144,7 +144,7 @@ First build the container, then run scan and lastly copy results from container 
 Make sure to delete old containers, images and builds before building a new one
 ```
 docker build --no-cache -t na .
-docker run -t na -a -H 45.33.32.156 -t All
+docker run -t na -a -H scanme.nmap.org -t All
 docker ps
 docker cp CONTAINERNAME:scanner scanner
 ```
