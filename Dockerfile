@@ -1,8 +1,8 @@
 FROM kalilinux/kali-rolling
 
-RUN apt update -y && apt install -y kali-linux-headless
+RUN apt update -y && DEBIAN_FRONTEND="noninteractive" apt install -y kali-linux-headless
 #RUN apt install -y kali-linux-headless
-RUN apt-get install -y \
+RUN export DEBIAN_FRONTEND="noninteractive" apt install -y \
     git \
     wget \
     curl \
@@ -45,7 +45,7 @@ RUN git clone https://github.com/security-companion/nmapAutomatorNG.git && \
     ln -s /scanner/nmapAutomatorNG/nmapAutomatorNG.sh /usr/local/bin/
 
 # Clean
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN export DEBIAN_FRONTEND="noninteractive" apt-get clean && rm -rf /var/lib/apt/lists/*
 
 ENTRYPOINT [ "/bin/bash"]
 #, "/scanner/nmapAutomatorNG/nmapAutomatorNG.sh" 
