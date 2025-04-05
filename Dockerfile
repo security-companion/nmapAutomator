@@ -17,6 +17,7 @@ RUN export DEBIAN_FRONTEND="noninteractive" apt install -y \
     snmp \
     bind9-host \
     sudo \
+    iputils-ping
 #    wpscan \
 #    joomscan \
 #    droopescan \
@@ -25,7 +26,7 @@ RUN export DEBIAN_FRONTEND="noninteractive" apt install -y \
 #    smbmap \
 #    enum4linux \
 #    odat \
-    iputils-ping
+
 
 #RUN mkdir ~/.nmap/scripts
 RUN nmap --script-updatedb
