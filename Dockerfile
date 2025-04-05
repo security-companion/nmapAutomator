@@ -2,7 +2,7 @@ FROM kalilinux/kali-rolling
 
 RUN apt update -y && DEBIAN_FRONTEND="noninteractive" apt install -y kali-linux-headless
 #RUN apt install -y kali-linux-headless
-RUN export DEBIAN_FRONTEND="noninteractive" apt install -y \
+RUN DEBIAN_FRONTEND="noninteractive" apt install -y \
     git \
     wget \
     curl \
