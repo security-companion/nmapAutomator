@@ -48,6 +48,10 @@ while [ $# -gt 0 ]; do
                 REMOTE=true
                 shift
                 ;;
+        -c | --command)
+                COMMAND=true
+                shift
+                ;;
         -a | --allrecon)
                 RUNALLRECON=true
                 shift
@@ -121,6 +125,7 @@ usage() {
         printf "${YELLOW}\tUDP     : ${NC}Runs a UDP scan \"requires sudo\" ${YELLOW}(~5 minutes)\n"
         printf "${YELLOW}\tVulns   : ${NC}Runs CVE scan and nmap Vulns scan on all found ports ${YELLOW}(~5-15 minutes)\n"
         printf "${YELLOW}\tRecon   : ${NC}Suggests recon commands, then prompts to automatically run them\n"
+        printf "${YELLOW}\tCmd     : ${NC}Runs a specified command (option -c) \n"
         printf "${YELLOW}\tAll     : ${NC}Runs all the scans ${YELLOW}(~20-30 minutes)\n"
         printf "${NC}\n"
         exit 1
@@ -806,6 +811,14 @@ runRecon() {
         echo
 }
 
+# Run a specified command
+cmdScan() {
+        printf "${GREEN}---------------------Run specified command ------------------------\n"
+        printf "${NC}\n\n"     
+        printf "Running ${COMMAND}"
+        ${COMMAND}
+}
+
 # Print footer with total elapsed time
 footer() {
 
@@ -854,6 +867,7 @@ main() {
                 [ ! -f "nmap/Script_${HOST}.nmap" ] && scriptScan "${HOST}"
                 recon "${HOST}"
                 ;;
+        [Cc]md) cmdScan "${HOST}" ;;
         [Aa]ll)
                 portScan "${HOST}"
                 scriptScan "${HOST}"
@@ -880,7 +894,7 @@ if ! expr "${HOST}" : '^\([0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}
 fi
 
 # Ensure selected scan type is among available choices, then run the selected scan
-if ! case "${TYPE}" in [Nn]etwork | [Pp]ort | [Ss]cript | [Ff]ull | UDP | udp | [Vv]ulns | [Rr]econ | [Aa]ll) false ;; esac then
+if ! case "${TYPE}" in [Nn]etwork | [Pp]ort | [Ss]cript | [Ff]ull | UDP | udp | [Vv]ulns | [Rr]econ | [Aa]ll | [Cc]md) false ;; esac then
         if mkdir -p "${OUTPUTDIR}" && cd "${OUTPUTDIR}" && mkdir -p nmap/
         then
           main | tee "nmapAutomatorNG_${HOST}_${TYPE}.txt"
