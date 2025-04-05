@@ -27,7 +27,7 @@ RUN export DEBIAN_FRONTEND="noninteractive" apt install -y \
 #    odat \
     iputils-ping
 
-RUN mkdir ~/.nmap/scripts
+#RUN mkdir ~/.nmap/scripts
 RUN nmap --script-updatedb
 
 # Create a directory for application data
