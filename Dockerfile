@@ -29,7 +29,7 @@ RUN DEBIAN_FRONTEND="noninteractive" apt install -y \
 
 
 #RUN mkdir ~/.nmap/scripts
-RUN nmap --script-updatedb
+#RUN nmap --script-updatedb
 
 # Create a directory for application data
 RUN mkdir -p /scanner
