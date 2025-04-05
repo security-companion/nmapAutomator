@@ -1,14 +1,7 @@
 FROM kalilinux/kali-rolling
 
-# Create a directory for application data
-RUN mkdir -p /scanner
-
-# Declare a volume to persist application data
-VOLUME ["/scanner"]
-
-WORKDIR /scanner
-
-RUN apt update -y && apt-get upgrade -y
+RUN apt update -y && apt install -y kali-linux-headless
+#RUN apt install -y kali-linux-headless
 RUN apt-get install -y \
     git \
     wget \
@@ -24,16 +17,26 @@ RUN apt-get install -y \
     snmp \
     bind9-host \
     sudo \
-    wpscan \
-    joomscan \
+#    wpscan \
+#    joomscan \
 #    droopescan \
 #    snmpwalk \
 #    ldapsearch \
-    smbmap \
-    enum4linux \
-    odat \
-    iputils-ping && \
-    nmap --script-updatedb
+#    smbmap \
+#    enum4linux \
+#    odat \
+    iputils-ping
+
+RUN mkdir ~/.nmap/scripts
+RUN nmap --script-updatedb
+
+# Create a directory for application data
+RUN mkdir -p /scanner
+
+# Declare a volume to persist application data
+VOLUME ["/scanner"]
+
+WORKDIR /scanner
 
 #RUN apt -y install python3-pip golang
 
@@ -44,4 +47,5 @@ RUN git clone https://github.com/security-companion/nmapAutomatorNG.git && \
 # Clean
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT [ "/bin/bash", "/scanner/nmapAutomatorNG/nmapAutomatorNG.sh" ]
+ENTRYPOINT [ "/bin/bash"]
+#, "/scanner/nmapAutomatorNG/nmapAutomatorNG.sh" 
