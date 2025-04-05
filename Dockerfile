@@ -45,7 +45,7 @@ RUN git clone https://github.com/security-companion/nmapAutomatorNG.git && \
     ln -s /scanner/nmapAutomatorNG/nmapAutomatorNG.sh /usr/local/bin/
 
 # Clean
-RUN export DEBIAN_FRONTEND="noninteractive" apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN DEBIAN_FRONTEND="noninteractive" apt-get clean && rm -rf /var/lib/apt/lists/*
 
-ENTRYPOINT [ "/bin/bash"]
+ENTRYPOINT [ "/bin/bash", "/scanner/nmapAutomatorNG/nmapAutomatorNG.sh"]
 #, "/scanner/nmapAutomatorNG/nmapAutomatorNG.sh" 
