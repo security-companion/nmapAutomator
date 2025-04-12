@@ -139,7 +139,17 @@ Scan Types:
 
 ------
 
-## Usage with docker
+## Download image from docker hub
+
+Regularly the current docker image is uploaded to docker hub. You can download it onto your machine and run it without the need of manually installing tools in eg. a kali VM.
+```
+docker pull securitycompanion/nmapautomatorng
+docker run --privileged -t securitycompanion/nmapautomatorng -a -H scanme.nmap.org -t Full
+```
+Then you can access the scan results eg. with Docker Desktop or through copying the result files onto your host machine (see below)
+------
+
+## Build docker image on your own
 First build the container, then run scan and lastly copy results from container onto your host machine (replace CONTAINERNAME with the correct one found with docker ps)
 Make sure to delete old containers, images and builds before building a new one
 ```
